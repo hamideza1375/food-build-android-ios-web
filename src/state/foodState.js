@@ -5,18 +5,18 @@ import backgroundTimer from '../utils/backgroundTimer'
 
 const beforeUnloadListener = (event) => {
   event.preventDefault();
-  if(Platform.OS === 'web'){
-  return event.returnValue = "آیا سفارشتان را به پایان رساندین و خارج میشوید؟";
- }
+  if (Platform.OS === 'web') {
+    return event.returnValue = "آیا سفارشتان را به پایان رساندین و خارج میشوید؟";
+  }
 };
 
 export function foodState(p) {
 
 
   this.getImageProfile = () => {
-    p.useEffect(() => {      
+    p.useEffect(() => {
       (async () => {
-         p.getProfile().then(({ data }) => {
+        p.getProfile().then(({ data }) => {
           data?.uri && p.setimageProfile(data.uri)
         })
       })()
@@ -59,12 +59,12 @@ export function foodState(p) {
   }
 
   this.getTitleFood = () => {
-  p.useEffect(() => {      
-    (async () => {
-      let { data } = await p.getfoods()
-      p.setfoods(data)
-    })()
-  }, [])
+    p.useEffect(() => {
+      (async () => {
+        let { data } = await p.getfoods()
+        p.setfoods(data)
+      })()
+    }, [])
   }
 
 
@@ -112,7 +112,7 @@ export function foodState(p) {
     for (let n in fd2) {
       let find = f.find((f) => f._id === fd2[n]._id)
       if (!find) { textSearch[1] && f.push(fd2[n]) }
-      }
+    }
     p.foodMap.set(p.route.params.id, f)
     if (f) {
       const currentPage = Math.max(0, Math.min(1, f.length))
@@ -155,8 +155,8 @@ export function foodState(p) {
           p.setallprice(su < 0 ? 0 : su)
           p.map.set('allprice', JSON.stringify(su))
 
-          if( Platform.OS === 'web' && !su){
-            removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+          if (Platform.OS === 'web' && !su) {
+            removeEventListener("beforeunload", beforeUnloadListener, { capture: true });
           }
         }
       })()
@@ -167,7 +167,7 @@ export function foodState(p) {
 
 
   this.plustNum = async (inde, item, setpage, page) => {
-    Platform.OS === 'web' && addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+    Platform.OS === 'web' && addEventListener("beforeunload", beforeUnloadListener, { capture: true });
     if (p.route.name == 'ChildFood') {
       let h = [...p.foodMap.get(p.route.params.id)]
       let index = p.foodMap.get(p.route.params.id).findIndex(f => f._id == item._id)
@@ -282,24 +282,33 @@ export function foodState(p) {
       "",
       [
         { text: "Cancel", onPress: () => { } },
-        { text: "OK", onPress:async()=>{
-          for (let i of p.foods) {
-            const { data } = await p.getallchildfood(i._id)
-            for (let item of data.child) {
-              p.map.delete(item._id)
-              p.map.delete(item._id + '1')
+        {
+          text: "OK", onPress: async () => {
+            for (let i of p.foods) {
+              const { data } = await p.getallchildfood(i._id)
+              for (let item of data.child) {
+                p.map.delete(item._id)
+                p.map.delete(item._id + '1')
+              }
             }
+
+
             p.map.delete('sum')
             p.map.delete('allprice')
             p.setallprice(0)
             p.setallfood([])
             p.settotalTitle([])
             p.setshow1(!p.show1)
+            if (Platform.OS === 'web') removeEventListener("beforeunload", beforeUnloadListener, { capture: true });
+            // p.setfoodMap(new Map())
+            // p.setmap(new Map())
+            // p.setcurrent([])
+            p.setchangeChildfood(!p.changeChildfood)
+
           }
-        }},
+        },
       ]
     )
-
   }
 
 
@@ -337,7 +346,7 @@ export function foodState(p) {
         const { data } = await p.getcommentchildfood(p.route.params.id, p.route.params.id2)
         p.setallcomment(data.comment)
       })()
-    }, [p.showForm, p.showForm2, p.changeComment,p.ass2])
+    }, [p.showForm, p.showForm2, p.changeComment, p.ass2])
 
     p.useEffect(() => {
       return () => {
@@ -353,7 +362,7 @@ export function foodState(p) {
   this.findCmment = async () => {
     p.useEffect(() => {
       p.allcomment.forEach(item => {
-        if (item.starId === p.tokenValue.userId) { p.setsendMessage(false) } 
+        if (item.starId === p.tokenValue.userId) { p.setsendMessage(false) }
       });
     }, [p.allcomment])
   }
@@ -378,8 +387,8 @@ export function foodState(p) {
       p.setemail(''),
       p.setmessage(''),
       p.setshowForm(false)
-      p.setass2(false);
-      setTimeout(()=>{p.setass2(true);},10)
+    p.setass2(false);
+    setTimeout(() => { p.setass2(true); }, 10)
   }
 
 
@@ -408,8 +417,8 @@ export function foodState(p) {
     p.setmessage('')
     p.setshowForm(false)
     p.setass2(false);
-    setTimeout(()=>{p.setass2(true);},10)
-    }
+    setTimeout(() => { p.setass2(true); }, 10)
+  }
 
 
 
@@ -422,9 +431,9 @@ export function foodState(p) {
         {
           text: "OK", onPress: async () => {
             await p.deletecomment(p.route.params.id, p.route.params.id2, id3, p.tokenValue.userId)
-            
-            p.setass2(false);
-            setTimeout(()=>{p.setass2(true)},10)
+
+            p.setcurrentComment(cmnt => cmnt.filter((c) => (c._id !== id3)))
+
             p.setsendMessage(true)
           }
         }
@@ -437,15 +446,15 @@ export function foodState(p) {
   this.getEditComment = (id3) => {
     p.useEffect(() => {
       (async () => {
-        const { data } = await p.getcommentsinglefood(p.route.params.id, p.route.params.id2, id3)
-        p.setmessage(data.comment.message)
-        p.setallstar(data.comment.allstar)
-        if (data.comment.allstar == 1) p.setstar1(true)
-        if (data.comment.allstar == 2) p.setstar1(true), p.setstar2(true)
-        if (data.comment.allstar == 3) p.setstar1(true), p.setstar2(true), p.setstar3(true)
-        if (data.comment.allstar == 4) p.setstar1(true), p.setstar2(true), p.setstar3(true), p.setstar4(true)
-        if (data.comment.allstar == 5) p.setstar1(true), p.setstar2(true), p.setstar3(true), p.setstar4(true), p.setstar5(true)
-     })()
+          const { data } = await p.getcommentsinglefood(p.route.params.id, p.route.params.id2, id3)
+          p.setmessage(data.comment.message)
+          p.setallstar(data.comment.allstar)
+          if (data.comment.allstar == 1) p.setstar1(true)
+          if (data.comment.allstar == 2) p.setstar1(true), p.setstar2(true)
+          if (data.comment.allstar == 3) p.setstar1(true), p.setstar2(true), p.setstar3(true)
+          if (data.comment.allstar == 4) p.setstar1(true), p.setstar2(true), p.setstar3(true), p.setstar4(true)
+          if (data.comment.allstar == 5) p.setstar1(true), p.setstar2(true), p.setstar3(true), p.setstar4(true), p.setstar5(true)
+      })()
 
     }, [])
   }
@@ -485,6 +494,12 @@ export function foodState(p) {
     return () => Platform.OS === 'android' && p.BackHandler.removeEventListener('hardwareBackPress')
   }
 
+  this.removeReload = () => {
+    if (Platform.OS === 'web')
+      removeEventListener("beforeunload", beforeUnloadListener, { capture: true });
+  }
+
+
 }
 
 
@@ -504,59 +519,59 @@ export const home = (p) => {
     })();
 
     Platform.OS === 'web' ?
-    backgroundTimer(async () => {
-      (async () => {
-        let newNotification = await p.localStorage.getItem('notification')
-        const { data } = await p.notification()
-        if (data)
-          if (data.message && newNotification !== data.message) {
-            p.create(data.title, data.message, require('../assets/images/logo.png'))
-            await p.localStorage.setItem('notification', data.message)
-          }
-      })();
-    }, 15000)
+      backgroundTimer(async () => {
+        (async () => {
+          let newNotification = await p.localStorage.getItem('notification')
+          const { data } = await p.notification()
+          if (data)
+            if (data.message && newNotification !== data.message) {
+              p.create(data.title, data.message, require('../assets/images/logo.png'))
+              await p.localStorage.setItem('notification', data.message)
+            }
+        })();
+      }, 15000)
 
-    :
-    backgroundTimer.runBackgroundTimer(async () => {
-      (async () => {
-        let newNotification = await p.localStorage.getItem('notification')
-        const { data } = await p.notification()
-        if (data)
-          if (data.message && newNotification !== data.message) {
-            p.create(data.title, data.message, require('../assets/images/logo.png'))
-            await p.localStorage.setItem('notification', data.message)
-          }
-      })();
-    }, 15000);
+      :
+      backgroundTimer.runBackgroundTimer(async () => {
+        (async () => {
+          let newNotification = await p.localStorage.getItem('notification')
+          const { data } = await p.notification()
+          if (data)
+            if (data.message && newNotification !== data.message) {
+              p.create(data.title, data.message, require('../assets/images/logo.png'))
+              await p.localStorage.setItem('notification', data.message)
+            }
+        })();
+      }, 15000);
 
   }, [p.width])
 
 
-  p.useEffect(() => {      
-      (async () => {
-        setTimeout(()=>{
-          p.getProfile().then(({ data }) => {
-            data?.uri && p.setimageProfile(data.uri)
-          })
-        },500)
-      })()
-    }, [])
+  p.useEffect(() => {
+    (async () => {
+      setTimeout(() => {
+        p.getProfile().then(({ data }) => {
+          data?.uri && p.setimageProfile(data.uri)
+        })
+      }, 500)
+    })()
+  }, [])
 
 
-    const navigation = useNavigation()
-    p.useEffect(() => {
-      var toastOK = () => { p.toast.success('موفق آمیز', '✅', 2500) }
-      var toast500 = () => { p.toast.error('خطا', 'مشکلی از سمت سرور پیش آمده') ; p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({text: '' }); p.setcaptcha('')  }
-      var toast400 = () => { p.toast.error('خطا', 'اصلاح کنید و دوباره امتحان کنید') ; p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({text: '' }); p.setcaptcha('')  }
-      var toast399 = () => { p.toast.error('خطا', 'کد وارد شده اشتباه هست') ; p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({text: '' }); p.setcaptcha('')  }
-      var toast398 = () => { p.toast.error('خطا', 'شما قبلا ثبت نام کردید') ; p.setRand(parseInt(Math.random() * 9000 + 1000)) ; p.refInput.current && p.refInput.current.setNativeProps({text: '' }); p.setcaptcha('') }
-      var toast397 = () => { p.toast.error('خطا', 'شماره یا پسورد را اشتباه وارد کردید') ; p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({text: '' }); p.setcaptcha('')  }
-      var toast395 = () => { p.toast.error('خطا', 'شما هنوز انتخابی نکردین', 3000) ; p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({text: '' }); p.setcaptcha('')  }
-     
+  const navigation = useNavigation()
+  p.useEffect(() => {
+    var toastOK = () => { p.toast.success('موفق آمیز', '✅', 2500) }
+    var toast500 = () => { p.toast.error('خطا', 'مشکلی از سمت سرور پیش آمده'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast400 = () => { p.toast.error('خطا', 'اصلاح کنید و دوباره امتحان کنید'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast399 = () => { p.toast.error('خطا', 'کد وارد شده اشتباه هست'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast398 = () => { p.toast.error('خطا', 'شما قبلا ثبت نام کردید'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast397 = () => { p.toast.error('خطا', 'شما قبلا ثبت نام نکرده این و یا مشخصاتتان را اشتباه وارد کردین'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast395 = () => { p.toast.error('خطا', 'شما هنوز انتخابی نکردین', 3000); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+
     Axios.interceptors.response.use(function (response) {
-      if(response.config.method !== 'get' &&
-      navigation.getCurrentRoute()?.name !== 'Payment' && navigation.getCurrentRoute()?.name !== 'Location' && (response.status === 200 || response.status === 201)) toastOK()
-      return response  
+      if (response.config.method !== 'get' &&
+        navigation.getCurrentRoute()?.name !== 'Payment' && navigation.getCurrentRoute()?.name !== 'Location' && (response.status === 200 || response.status === 201)) toastOK()
+      return response
     }, function (error) {
       if (error?.response?.status) {
         if (error.response.status > 400 && error.response.status <= 500) { toast500() };
@@ -573,16 +588,14 @@ export const home = (p) => {
 
 
   p.useMemo(() => {
-      setTimeout(() => {
-        p.setSplash(false)
-      }, 1000)
-
-      
-    }, [])
-    p.Dimensions.addEventListener('change', ({ window: { width, height } }) => {
-      width < height ? p.setorientation("PORTRAIT") : p.setorientation("LANDSCAPE")
-      p.setwidth(width); p.setheight(height)
-    })
+    setTimeout(() => {
+      p.setSplash(false)
+    }, 1000)
+  }, [])
+  p.Dimensions.addEventListener('change', ({ window: { width, height } }) => {
+    width < height ? p.setorientation("PORTRAIT") : p.setorientation("LANDSCAPE")
+    p.setwidth(width); p.setheight(height)
+  })
 
 
   p.useEffect(() => {
@@ -597,7 +610,7 @@ export const home = (p) => {
   }, [])
 
 
-  p.useEffect(() => {      
+  p.useEffect(() => {
     (async () => {
       let { data } = await p.getfoods()
       p.setfoods(data)

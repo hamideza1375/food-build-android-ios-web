@@ -21,7 +21,7 @@ import EditChildFood from './screens/admin/EditChildFood';
 import CreateTitleAllFood from './screens/admin/CreateTitleAllFood';
 import CreateChildFood from './screens/admin/CreateChildFood';
 import ListAvailable from './screens/admin/ListAvailable';
-import { states } from "./utils/context/contexts";
+import { states, propTypes } from "./utils/context/contexts";
 import Address from "./screens/admin/Address";
 import DeleteAllAddress from "./screens/admin/DeleteAllAddress";
 import AddAdmin from "./screens/admin/AddAdmin";
@@ -45,6 +45,7 @@ import GetProposal from "./screens/admin/GetProposal";
 rtl()
 
 LogBox.ignoreAllLogs();
+
 
 const Tab = createNativeStackNavigator()
 const Food = () => {
@@ -92,12 +93,12 @@ const Food = () => {
           </Tab.Group>
           <Tab.Group screenOptions={{ headerShown: false }} >
             <Tab.Screen name="FinallFoodPayment" options={{ title: 'سبد خرید', headerShown: Platform.OS !== 'web' ? true : false, headerStyle: { backgroundColor: '#fa0' } }} children={(props) => <Layout {...props}  {...p} ><FinallFoodPayment {...props} {...p} {...reducer(props)} /></Layout>} />
-            <Tab.Screen name="Location" options={{headerShown: true, title: 'نقشه', headerShown: Platform.OS === 'web' ? false : true }} children={(props) => <Layout {...props}  {...p} ><Location {...props} {...p} {...reducer(props)} /></Layout>} />
+            <Tab.Screen name="Location" options={{ title: 'نقشه', headerShown: Platform.OS !== 'ios' ? false : true }} children={(props) => <Layout {...props}  {...p} ><Location {...props} {...p} {...reducer(props)} /></Layout>} />
             <Tab.Screen name="Payment" options={{ title: 'پرداخت' }} children={(props) => <Layout {...props}  {...p} ><Payment {...props} {...p} {...reducer(props)} /></Layout>} />
           </Tab.Group>
           <Tab.Group screenOptions={{}}>
             <Tab.Screen initialParams={{ key: 'admin' }} name="AdminTitleAllFood" options={{ title: 'پنل ادمین', headerShown: false }} children={(props) => <Layout {...props}  {...p} ><AdminTitleAllFood {...props} {...p} {...reducer(props)} /></Layout>} />
-            <Tab.Screen initialParams={{ key: 'admin' }} name="AdminChildTable" options={({ route }) => ({ title: route.params.title, header: (props) => <Row bgcolor='#fff' style={{ shadowRadius: 7, shadowOpacity: .2, marginTop: Platform.OS === 'ios' ? 40 : 0, justifyContent: 'space-around' }} mb={5} ><Input alignSelf='center' mt={5} mb={2} w='80%' placeholderColor='red' iconColor='#777' border={[1, '#aaa']} icon='search' value={p.textSearch} onChangeText={(text) => { _food(props).sercher(text); p.settextSearch(text) }} placeholder="جستجو" /><Micon name='arrow-back' onPress={() => { props.navigation.goBack() }} style={{ height: 42, width: 35, marginTop: 17, textAlign: 'center' }} size={27} /></Row>})} children={(props) => <Layout {...props}  {...p} ><AdminChildTable {...props} {...p} {...reducer(props)} /></Layout>} />
+            <Tab.Screen initialParams={{ key: 'admin' }} name="AdminChildTable" options={({ route }) => ({ title: route.params.title, header: (props) => <Row bgcolor='#fff' style={{ shadowRadius: 7, shadowOpacity: .2, marginTop: Platform.OS === 'ios' ? 40 : 0, justifyContent: 'space-around' }} mb={5} ><Input alignSelf='center' mt={5} mb={2} w='80%' placeholderColor='red' iconColor='#777' border={[1, '#aaa']} icon='search' value={p.textSearch} onChangeText={(text) => { _food(props).sercher(text); p.settextSearch(text) }} placeholder="جستجو" /><Micon name='arrow-back' onPress={() => { props.navigation.navigate('AdminTitleAllFood') }} style={{ height: 42, width: 35, marginTop: 17, textAlign: 'center' }} size={27} /></Row>})} children={(props) => <Layout {...props}  {...p} ><AdminChildTable {...props} {...p} {...reducer(props)} /></Layout>} />
             <Tab.Screen initialParams={{ key: 'admin' }} name="EditTitleAllFood" options={({ route }) => ({ title: route.params.title })} children={(props) => <Layout {...props}  {...p} ><EditTitleAllFood {...props} {...p} {...reducer(props)} /></Layout>} />
             <Tab.Screen initialParams={{ key: 'admin' }} name="EditChildFood" options={({ route }) => ({ title: route.params.title })} children={(props) => <Layout {...props}  {...p} ><EditChildFood {...props} {...p} {...reducer(props)} /></Layout>} />
             <Tab.Screen initialParams={{ key: 'admin' }} name="CreateTitleAllFood" options={({ route }) => ({ title: 'ساخت دسته ی اغذیه' })} children={(props) => <Layout {...props}  {...p} ><CreateTitleAllFood {...props} {...p} {...reducer(props)} /></Layout>} />
@@ -107,7 +108,7 @@ const Food = () => {
             <Tab.Screen initialParams={{ key: 'admin' }} name="ChangeAdmin" options={{ title: 'تعویض ادمین' }} children={(props) => <Layout {...props}  {...p} ><ChangeAdmin {...props} {...p} {...reducer(props)} /></Layout>} />
             <Tab.Screen initialParams={{ key: 'admin' }} name="Address" options={{ title: 'آدرس' }} children={(props) => <Layout {...props}  {...p} ><Address {...props} {...p} {...reducer(props)} /></Layout>} />
             <Tab.Screen initialParams={{ key: 'admin' }} name="DeleteAdmin" options={{ title: 'حذف ادمین' }} children={(props) => <Layout {...props}  {...p} ><DeleteAdmin {...props} {...p} {...reducer(props)} /></Layout>} />
-            <Tab.Screen initialParams={{ key: 'admin' }} name="DeleteAllAddress" options={{title: 'حذف آدرس ها', headerShown: true, header: (props) =><Row fd={'row'} style={[Platform.OS === 'ios' && { marginTop: 40 }, { width: '100%', justifyContent: 'center', backgroundColor: '#fff', marginBottom: 8 }]} ><Input border={[1, '#888']} h={42} m={'auto'} mv={10} w={'85%'} alignSelf='center' value={p.textSearch} onChangeText={(text) => { p.settextSearch(text); const fd = p._address.filter(f => f.fullname.includes(text) || f.phone == text); p.setallAddress(fd) }} p="جستجو" icon={'search'} />{<Micon name='arrow-back' onPress={() => { props.navigation.goBack() }} style={{ height: 42, width: 35, marginTop: 17, left: -5, textAlign: 'center' }} size={27} />}</Row>}} children={(props) => <Layout {...props}  {...p} ><DeleteAllAddress {...props} {...p} {...reducer(props)} /></Layout>} />
+            <Tab.Screen initialParams={{ key: 'admin' }} name="DeleteAllAddress" options={{title: 'حذف آدرس ها', headerShown: true, header: (props) =><Row fd={'row'} style={[Platform.OS === 'ios' && { marginTop: 40 }, { width: '100%', justifyContent: 'center', backgroundColor: '#fff', marginBottom: 8 }]} ><Input border={[1, '#888']} h={42} m={'auto'} mv={10} w={'85%'} alignSelf='center' value={p.textSearch} onChangeText={(text) => { p.settextSearch(text); const fd = p._address.filter(f => f.fullname.includes(text) || f.phone == text); p.setallAddress(fd) }} p="جستجو" icon={'search'} />{<Micon name='arrow-back' onPress={() => { props.navigation.navigate('AdminTitleAllFood') }} style={{ height: 42, width: 35, marginTop: 17, left: -5, textAlign: 'center' }} size={27} />}</Row>}} children={(props) => <Layout {...props}  {...p} ><DeleteAllAddress {...props} {...p} {...reducer(props)} /></Layout>} />
             <Tab.Screen initialParams={{ key: 'admin' }} name="ListAvailable" options={{ title: 'لیست غذا ناموجود' }} children={(props) => <Layout {...props}  {...p} ><ListAvailable {...props} {...p} {...reducer(props)} /></Layout>} />
             <Tab.Screen initialParams={{ key: 'admin' }} name="GetProposal" options={{ title: 'ارسال نظرات و پیشنهادات' }} children={(props) => <Layout {...props}  {...p} ><GetProposal {...props} {...p} {...reducer(props)} /></Layout>} />
           </Tab.Group>
@@ -117,6 +118,34 @@ const Food = () => {
   )
 }
 
+ propTypes(Home)
+ propTypes(ChildFood)
+ propTypes(SingleFood)
+ propTypes(Register)
+ propTypes(Login)
+ propTypes(ForgetPass)
+ propTypes(ResetPass)
+ propTypes(Profile)
+ propTypes(FinallFoodPayment)
+ propTypes(Logout)
+ propTypes(Payment)
+ propTypes(LastPayment)
+ propTypes(Location)
+ propTypes(SendProposal)
+ propTypes(ListAvailable)
+ propTypes(AdminTitleAllFood)
+ propTypes(AdminChildTable)
+ propTypes(EditTitleAllFood)
+ propTypes(EditChildFood)
+ propTypes(CreateTitleAllFood)
+ propTypes(CreateChildFood)
+ propTypes(AddAdmin)
+ propTypes(Notifee)
+ propTypes(ChangeAdmin)
+ propTypes(Address)
+ propTypes(DeleteAdmin)
+ propTypes(DeleteAllAddress)
+ propTypes(GetProposal)
 
 const linking = {
   prefixes: ['localhost:19006://', 'http://localhost:19006'],
@@ -154,6 +183,7 @@ const linking = {
     },
   },
 };
+
 
 
 let App

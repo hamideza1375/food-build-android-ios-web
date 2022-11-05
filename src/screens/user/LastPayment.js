@@ -1,5 +1,5 @@
 import React from 'react'
-import { Span, P, Row } from '../../Components/Html'
+import { Span, P } from '../../Components/Html'
 
 const GetProposal = (p) => {
   p._user.getLastPayment()
@@ -19,9 +19,8 @@ const GetProposal = (p) => {
 
 
             <Span style={{ borderBottomWidth: .2, borderColor: '#888', paddingVertical: 15, width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 5, }} >
-              <P> <P style={{ fontWeight: 'bold' }} >آدرس: </P> <P>{p.lastPayment.formattedAddress?.split(",")[0] + p.lastPayment.formattedAddress?.split(",")[1]}</P></P>
+              <P> <P style={{ fontWeight: 'bold' }} >آدرس: </P> <P>{`${p.lastPayment.formattedAddress?.split(",")[0]} ${p.lastPayment.formattedAddress?.split(",")[1]}`}</P></P>
             </Span>
-
 
 
             <Span style={{ borderBottomWidth: .2, borderColor: '#888', paddingVertical: 15, width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 5, }} >

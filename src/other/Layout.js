@@ -1,10 +1,10 @@
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import React, { useCallback } from 'react'
-import { Platform, Animated, Text, Pressable, View } from 'react-native';
+import { Platform, SafeAreaView, Pressable, View } from 'react-native';
 import TopTab from '../Components/tabNavigation/TopTab';
 import BottomTab from '../Components/tabNavigation/BottomTab';
 import Drawer from '../Components/tabNavigation/Drawer';
-import { A_icon, Mc_icon } from '../Components/Html';
+import { Mc_icon } from '../Components/Html';
 
 export const Layout = (p) => {
 
@@ -37,22 +37,16 @@ export const Layout = (p) => {
      p.route.name : 'Profile', icon: 'user', navigate: p.route.name ===  'Profile' || p.route.name ===  'LastPayment' || p.route.name ===  'Logout'?p.route.name: p.navigateProfile }
      :
       { title: (p._key == '120') ?
-       p.route.name : 'Register', icon: 'user', navigate:p.route.name === 'Login'|| p.route.name === 'Register'?p.route.name: p.navigateUser }])
+       p.route.name : 'Login', icon: 'user', navigate:p.route.name === 'Login'|| p.route.name === 'Register'?p.route.name: p.navigateUser }])
     :
     (p.tokenValue.fullname ? []
        : [{ title: 'Home', icon: 'home', navigate: null }, { title: (p._key == '120') ? p.route.name : 'Register', icon: 'user', navigate: p.navigateUser }])
 
   return (
-    p.route.name === 'Profile' | p.route.name === 'LastPayment' | p.route.name === 'Login' | p.route.name === 'Register' | p.route.name === 'Home' | p.route.name === 'AdminTitleAllFood' ?
-      <Animated.View style={[
-        (Platform.OS === 'ios') ?
-          p.width < p.height ?
-            { paddingTop: 40, flex: 1, backgroundColor: p.route.name === 'Profile' ? '#bbf' : '#fff' }
-            :
-            { paddingHorizontal: 40 / 1.5, paddingTop: 10, flex: 1, backgroundColor: p.route.name === 'Profile' ? '#bbf' : '#fff' }
-          :
-          { flex: 1, overflow:'hidden' }]} >
-
+    <View style={{flex:1, paddingHorizontal:Platform.OS === 'ios'? (p.width > p.height ?35:0):0}} >
+    <SafeAreaView style={{backgroundColor: p.route.name === 'Profile' ? '#bbf' : '#fff'}} />
+  {  p.route.name === 'Profile' | p.route.name === 'LastPayment' | p.route.name === 'Login' | p.route.name === 'Register' | p.route.name === 'Home' | p.route.name === 'AdminTitleAllFood' ?
+      <View style={{flex:1,overflow:'hidden'}}>
         {
           p.route.name === 'Profile' &&(
             p.tokenValue.fullname ?
@@ -98,11 +92,12 @@ export const Layout = (p) => {
     </Drawer>
 
         }
-      </Animated.View>
+      </View>
       :
 
       <View flex={1} >
         {p.children}
+      </View>}
       </View>
   )
 }

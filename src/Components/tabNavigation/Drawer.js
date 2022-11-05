@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useRef } from 'react'
-import { Dimensions, View, Text, StyleSheet, Animated, Pressable, Platform } from 'react-native'
+import { Dimensions, View, Text, StyleSheet, Animated, Pressable, Platform, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 const width = Dimensions.get('window').width;
 
@@ -51,7 +51,7 @@ const Drawer = ({ color='#222',group, children, name, title, bgcolor = '#fff', s
       <Animated.View style={[styles.container2,
       { transform: [{ translateX: fadeAnim }], opacity: hidden }]} >
         <Animated.View ref={shadowRef} onStartShouldSetResponder={close} style={[styles.pressable,{backgroundColor: 'black'}]} />
-        <View style={styles.viewDriver} >
+        <ScrollView style={styles.viewDriver} contentContainerStyle={{paddingBottom:130}} >
           {group.map((item, key) => (
             <View key={key} style={styles.routeView} >
               <Pressable
@@ -63,7 +63,7 @@ const Drawer = ({ color='#222',group, children, name, title, bgcolor = '#fff', s
               </Pressable>
             </View>
           ))}
-        </View>
+        </ScrollView>
       </Animated.View>
     </View>
   )
@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
     zIndex: 100,
     position: 'absolute',
     paddingTop: 65,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    // justifyContent: 'flex-start',
+    // alignItems: 'flex-start',
     width: "70%",
     minWidth:260,
     maxWidth:290,

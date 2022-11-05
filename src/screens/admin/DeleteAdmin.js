@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form} from '../../Components/Html'
+import {Div, Form, Span} from '../../Components/Html'
 import { ScrollView, Text, View } from 'react-native';
 
 export default function DeleteAdmin (p) {
@@ -7,9 +7,8 @@ export default function DeleteAdmin (p) {
   p._admin.getAlluserAdmin()
 
   return (
-      <View>
-      <Form btn={true} contentContainerStyle={{height:'auto'}} ph {...p} onClick={() => sendDeleteAdmin()} />
-       <ScrollView>
+      <>
+      <Form webStyle={{height:'calc(100vh - 68px)'}} btn={true} ph {...p} onClick={() => sendDeleteAdmin()} />
        { p.admin.length ?
         <View style={{alignItems:'center',justifyContent:'center',alignSelf:'center',marginTop:15, width:220, height:80,backgroundColor:'silver'}} >
           {p.admin.map((adm,i)=>(
@@ -20,7 +19,6 @@ export default function DeleteAdmin (p) {
           ))}
         </View>:
         <></>}
-    </ScrollView>
-    </View>
+    </>
   )
 }

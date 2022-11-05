@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Animated, Text, View } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import { Input } from "./FormComponent";
@@ -36,21 +36,19 @@ function InputImage({ imIconLeft,imIconRight,imageUrl,setImageUrl,_imageUrl,newO
             iconRight={imIconRight}
           >
             <Text style={[styles.textinput, { marginTop: 5 }]} >انتخاب عکس</Text>
-            <Animated.View style={[styles.animatedBorder,
+            <Animated.View onTouchStart={pickImage} style={[styles.animatedBorder,
             _imageUrl && !img &&
-            {borderWidth: 1.2}]} >
+            {borderWidth: 1.2, borderColor:'red'}]} >
               <Input
                 editable={false}
                 p=" انتخاب از گالری "
-                iconPress={pickImage}
-                onPressOut={pickImage}
                 icon={'image'}
-                value={imageUrl}
+                value={imageUrl.name}
                 style={styles.input}
               />
             </Animated.View>
             {_imageUrl && !img && <Text style={[styles.textinput, { color: 'red' }]} >
-              {newObj.imageUrl}
+                {newObj}
             </Text>}
           </Swiper>
         </Animated.View>

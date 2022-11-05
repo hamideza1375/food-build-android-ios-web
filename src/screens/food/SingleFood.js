@@ -1,11 +1,9 @@
-
 import React from 'react'
 import { Platform } from 'react-native'
-import { Pagination, Loading, Card, Icon, Button, ImgBackground, Span, P, FlatList, StyleSheet, Container, Div } from '../../Components/Html'
+import { Pagination, Loading, Card, Icon, ImgBackground, Span, P, FlatList, StyleSheet, Container } from '../../Components/Html'
 import s from './Food.module.scss'
-import { CreateComment } from './form/CreateComment';
-import { EditComment } from './form/EditComment';
 import spacePrice from '../../utils/spacePrice'
+import CommentForm from './formComponent/CommentForm';
 
 const SingleFood = (p) => {
   p._food.getImageProfile()
@@ -17,7 +15,7 @@ const SingleFood = (p) => {
   const deleteComment = (id) => p._food.deleteComment(id)
 
   return (
-<Container class={s.s_container} webStyle={{minHeight:'100vh',height:'100%'}} >
+   <Container class={s.s_container} webStyle={{minHeight:'100vh',height:'100%'}} >
       {!p.showForm && !p.showForm2 &&
         <Span class={s.imgBackgroundContainer} webStyle={{maxHeight:300}} >
           {
@@ -42,36 +40,7 @@ const SingleFood = (p) => {
           }
         </Span>}
 
-        <Span iosStyle={p.showForm && {marginTop:40}} class={s.btnContainer} >
-          {!p.showForm && <Button h={'100%'} w={'85%'} style={{ minHeight: 40, maxHeight: 40 }} bgcolor={Platform.OS === 'android' ?'#ff8522':'#ff8222' }color="#333" onClick={() => { p.setass2(!p.ass2); p.set ? p.setshowForm2(!p.showForm2) : editComment(p.allcomment.find(comment => comment.starId === p.tokenValue.userId)?._id) }}>
-            {!p.showForm2 ? p.sendMessage ? ' ارسال نظر' : ' ویرایش نظر' : ' بازگشت'}
-          </Button>}
-          {!p.showForm2 && p.showForm && <Button h={'100%'} w={'85%'} style={{ minHeight: 40, maxHeight: 40 }} bgcolor={Platform.OS === 'android' ?'#ff8522':'#ff8222' }color="#333" onClick={() => { p.setass2(!p.ass2); p.setshowForm(false) }}>
-            بازگشت
-          </Button>}
-
-          {p.sendMessage ?
-            <>
-              {p.showForm ? p.permission || p.tokenValue.isAdmin === 'chief' ?
-                <Span h={500} class={s.containerComment} >
-                  <CreateComment {...p} id3={p.sendMessage ? p.id3 : null} />
-                </Span>
-                :
-                <Span onLayout={() => {
-                  alert('برای ارسال نظر باید ثبت نام کرده و یا قبلا از این غذا سفارش داده باشین')
-                  p.setshowForm(false)
-                }} >
-                  <P color='transparent' >s</P>
-                </Span>
-                : <></>}
-            </> :
-            <>
-              {p.showForm &&
-                <Span h={500} class={s.containerComment} >
-                  <EditComment {...p} id={p.route.params.id} id2={p.route.params.id2} id3={p.id3} />
-                </Span>}
-            </>}
-        </Span>
+           <CommentForm {...p}  />
 
         {!p.showForm && !p.showForm2 && 
         <>
@@ -121,24 +90,10 @@ const SingleFood = (p) => {
                 )}
               />}
          
-
           <Span mt={8} style={{height:50,alignSelf:'center'}} >
-            {p.allcomment.length ?
-              <Pagination
-              food={p.allcomment}
-              setcurrent={p.setcurrentComment}
-              pageLimit={8}
-              ass={p.ass2}
-              page={p.page2}
-              setpage={p.setpage2}
-              currentPage={p.currentPage2}
-              setcurrentPage={p.setcurrentPage2}
-              />
-              :
-              <></>
-            }
+            {p.allcomment.length ? <Pagination food={p.allcomment} setcurrent={p.setcurrentComment} pageLimit={8} ass={p.ass2} page={p.page2} setpage={p.setpage2} currentPage={p.currentPage2} setcurrentPage={p.setcurrentPage2} />:<></>}
           </Span>
-              </>}
+         </>}
 
     </Container>
   )
@@ -150,5 +105,5 @@ const style = StyleSheet.create({
     width: 60,
     height: 60,
     alignSelf: 'center',
-  },
+  },    
 })

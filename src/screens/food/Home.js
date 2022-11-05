@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './Food.module.scss'
-import { Loading, Button, H1, Img, P, Scroll, Span, ThOpacity, FlatList } from '../../Components/Html';
-import Svg from './svg/Svg';
+import { Loading, Button, Img, P, Scroll, Span, ThOpacity, FlatList } from '../../Components/Html';
+import Svg from './other/Svg';
 import { Platform } from 'react-native';
 
 const Home = (p) => {
@@ -10,7 +10,6 @@ const Home = (p) => {
   p._food.backHandler()
   p._user._token()
   p._user._tokenValue()
-
 
   return (
     <Span class={s.container}>

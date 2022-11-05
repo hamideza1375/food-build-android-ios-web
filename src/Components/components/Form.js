@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { KeyboardAvoidingView, Pressable, View, Text, TextInput, Image, StyleSheet, ScrollView, Dimensions, Animated } from 'react-native'
+import { KeyboardAvoidingView, Pressable, View, Text, TextInput, Image, StyleSheet, ScrollView, Dimensions, Animated, Platform } from 'react-native'
 import { Input, Button, CheckBox } from '../Html'
 import yub from '../../utils/yub'
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
@@ -22,7 +22,7 @@ let loginInterval = null
 /> */}
 
 let interval
-const Form = ({timer=false, refInput, rand, setRand, btn = true, contentContainerStyle, overflow, mAutoFocus, mt, bgcolor = '#f0f0f0', f, e, p, cp, m, ch, c, t, pr, im, i, edit, s, ph, $code, code, setcode,
+const Form = ({webStyle={}, nativeStyle={}, timer=false, refInput, rand, setRand, btn = true, contentContainerStyle, overflow, mAutoFocus, mt, bgcolor = '#f0f0f0', f, e, p, cp, m, ch, c, t, pr, im, i, edit, s, ph, $code, code, setcode,
   title, settitle, price, setprice, phone, setphone,
   imageUrl, setImageUrl, info, setInfo
   , style, fullname, setfullname,
@@ -130,7 +130,7 @@ const Form = ({timer=false, refInput, rand, setRand, btn = true, contentContaine
 
 
   return (
-    <ScrollView contentContainerStyle={[{ height: 'auto' }, contentContainerStyle]} style={{ backgroundColor: bgcolor, borderRadius: 3, marginTop: mt }} >
+    <ScrollView contentContainerStyle={[ {flexGrow:1},contentContainerStyle]} style={[{ backgroundColor: bgcolor, borderRadius: 3, marginTop: mt }, Platform.OS === 'web' ? webStyle : nativeStyle ]} >
 
       <View style={[styles.viewContainer, { paddingTop: top }, style]} >
         <View style={[{ transform: [{ scaleY: sizeY }], padding: 10, paddingBottom: 25 }]}>

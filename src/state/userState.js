@@ -16,15 +16,15 @@ export function userState(p) {
       if(data.token) axios.defaults.headers.common["Authorization"] = data.token
       p.setchangeLoginUser(!p.changeLoginUser)
       p.route.params?.name !== 'ChildFood' ?
-      p.navigation.navigate("Home") :
+      p.navigation.replace("Home") :
       p.route.params.price != 0 ?
-      p.navigation.navigate("FinallFoodPayment") :
-      p.navigation.navigate("Home")
+      p.navigation.replace("FinallFoodPayment") :
+      p.navigation.replace("Home")
   }
   
 
   this.mountLogin = () => {
-    p.useEffects(() => (() => {
+    p.useEffect(() => (() => {
       p.setfullname('');
       p.setemail('');
       p.setphone('');
@@ -68,7 +68,7 @@ export function userState(p) {
 
   // profile
   this._tokenValue = () => {
-    p.useEffects(() => {
+    p.useEffect(() => {
       p.localStorage.getItem("token").then((token) => {
         if (token) {
           const user = p.jwt_decode(token)
@@ -89,7 +89,7 @@ export function userState(p) {
 
 
   this.profile = async () => {
-    p.useEffects(() => {
+    p.useEffect(() => {
       (async () => {
         let room = ['room5', 'room6']
         for (let i of room) {
@@ -130,7 +130,7 @@ export function userState(p) {
   }
 
   this.setreplaceInput = async () => {
-    p.useEffects(() => {
+    p.useEffect(() => {
       return () => {
         p.setreplaceInput(false)
       }
@@ -210,7 +210,7 @@ export function userState(p) {
 
 
   this.reversAction = async () => {
-    p.useEffects(() => {
+    p.useEffect(() => {
       (async () => {
         let { data } = await p.reverse(p.markers)
         let formattedAddress = data[0].formattedAddress
@@ -231,7 +231,7 @@ export function userState(p) {
 
 
 
-    p.useEffects(() => {
+    p.useEffect(() => {
       if (p.allItemLocation && p.allItemLocation.longitude) {
         if (
           p.allItemLocation.longitude < 57.645 ||
@@ -250,7 +250,7 @@ export function userState(p) {
 
   // logout
   this.logout = async () => {
-    p.useEffects(() => {
+    p.useEffect(() => {
       (async () => {
 
         p.Alert.alert(
@@ -271,13 +271,18 @@ export function userState(p) {
                 const { data } = await p.getallchildfood(i._id)
                 for (let item of data.child) {
                   p.map.delete(item._id)
-                  p.map.delete(item.title)
+                  p.map.delete(item._id + '1') 
                 }
               }
               p.map.delete('sum')
               p.map.delete('allprice')
               p.setallprice(0)
-
+              p.setallfood([])
+              p.settotalTitle([])
+              p.setshow1(!p.show1)
+              // p.setfoodMap(new Map())
+              // p.setmap(new Map())
+              // p.setcurrent([])
               p.navigation.navigate("Home")
             }
           }])
@@ -313,7 +318,7 @@ export function userState(p) {
 
 
   this.getLastPayment = () => {
-    p.useEffects(() => {
+    p.useEffect(() => {
       (async () => {
         let { data } = await p.getLastPayment()
         p.setlastPayment(data)

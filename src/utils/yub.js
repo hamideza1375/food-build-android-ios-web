@@ -130,7 +130,7 @@
         return target[propName]
       }
       else {
-        return "لطفا از گالری یکی را انتخواب کنید"
+        return "لطفا از گالری یک عکس را انتخواب کنید"
       }
     }
     if (propName === 'info') {

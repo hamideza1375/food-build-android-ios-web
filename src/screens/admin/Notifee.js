@@ -3,6 +3,6 @@ import {Form} from '../../Components/Html'
 
 const Notifee = (p) => {
   const createNotifee = () => p._admin.notifee()
-  return <Form t i {...p} onClick={createNotifee} />
+  return <Form webStyle={{height:'calc(100vh - 68px)'}} t i {...p} onClick={createNotifee} />
 }
 export default Notifee
