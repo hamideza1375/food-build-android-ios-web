@@ -6,6 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."

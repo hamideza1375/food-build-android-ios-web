@@ -153,6 +153,7 @@ function State() {
   const [changeProposal, setchangeProposal] = useState(false)
   const [locationPermission, setlocationPermission] = useState(false)
   const [rand, setRand] = useState(parseInt(Math.random() * 9000 + 1000));
+  const [showActivity, setshowActivity] = useState(false);
   const refInput = useRef()
   const useEffect = (call, state) => { useFocusEffect(useCallback(() => call(), state)) }
 
@@ -167,6 +168,7 @@ function State() {
     useMemo,
     moment, jwt_decode, localStorage, Alert, create, close, spacePrice, courseIdValidator, truncate,
     $, set$, locationPermission, setlocationPermission,
+    showActivity, setshowActivity,
     anim, animScale,
     _list, set_list,
     locationtoken, setlocationtoken,

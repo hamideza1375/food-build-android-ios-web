@@ -370,6 +370,7 @@ export function foodState(p) {
 
 
   this.sendComment = async () => {
+    p.setshowActivity(true)
     await p.createcommentchildfood(p.route.params.id, p.route.params.id2, {
       starId: p.tokenValue.userId,
       fullname: p.tokenValue.fullname,
@@ -407,6 +408,7 @@ export function foodState(p) {
 
 
   this.editComment = async id3 => {
+    p.setshowActivity(true)
     await p.editcomment(p.route.params.id, p.route.params.id2, id3, { message: p.message, allstar: p.allstar })
     p.setstar1(true)
     p.setstar2(true)
@@ -430,6 +432,7 @@ export function foodState(p) {
         { text: "Cancel", onPress: () => { } },
         {
           text: "OK", onPress: async () => {
+            p.setshowActivity(true)
             await p.deletecomment(p.route.params.id, p.route.params.id2, id3, p.tokenValue.userId)
 
             p.setcurrentComment(cmnt => cmnt.filter((c) => (c._id !== id3)))
@@ -571,7 +574,8 @@ export const home = (p) => {
     Axios.interceptors.response.use(function (response) {
       if (response.config.method !== 'get' &&
         navigation.getCurrentRoute()?.name !== 'Payment' && navigation.getCurrentRoute()?.name !== 'Location' && (response.status === 200 || response.status === 201)) toastOK()
-      return response
+        p.setshowActivity(false)
+        return response
     }, function (error) {
       if (error?.response?.status) {
         if (error.response.status > 400 && error.response.status <= 500) { toast500() };
@@ -580,6 +584,7 @@ export const home = (p) => {
         if (error.response.status === 398) { toast398() };
         if (error.response.status === 397) { toast397() };
         if (error.response.status === 395) { toast395() };
+        p.setshowActivity(false)
       } return Promise.reject(error);
     });
 

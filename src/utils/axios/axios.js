@@ -1,7 +1,7 @@
 import localStorage from "@react-native-async-storage/async-storage"
 import Axios from 'axios'
-export const localhost = "http://192.168.42.42"
-export const localhost1 = "http://localhost"
+export const localhost1 = "http://192.168.42.42"
+export const localhost = "http://localhost:4000"
 Axios.defaults.headers.post["Content-Type"] = "multipart/form-data"
 const setToken = (async () => { const token = await localStorage.getItem("token"); if (token) Axios.defaults.headers.common["Authorization"] = token; })()
 function _axios() {

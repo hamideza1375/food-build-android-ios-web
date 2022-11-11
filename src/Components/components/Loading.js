@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { useFocusEffect } from '@react-navigation/native';
 
 const Loading = (props) => {
-  const { time } = props
+  const { time, scale, left, right, top, bottom, pos } = props
   const [showLoad, setshowLoad] = useState(true)
   useFocusEffect(useCallback(() => {
       let qq = setTimeout(() => {
@@ -13,10 +13,10 @@ const Loading = (props) => {
     return () => (clearInterval(qq))
   }, []))
   return (
-    <View height={props.h} style={[{ minWidth: '100%', justifyContent: 'center', alignItems: 'center', top: 40 }, props.style]} >
+    <View height={props.h} style={[{ minWidth: '100%', justifyContent: 'center', alignItems: 'center', top: top?top:40,left,right,bottom, position:pos, zIndex: 1000, }, props.style]} >
       <View style={{ marginBottom: 'auto', }} >
         {showLoad ?
-          < ActivityIndicator {...props} style={{ transform: [{ scale: 2 }] }} />
+          < ActivityIndicator {...props} style={{ transform: [{ scale:scale? scale: 2 }] }} />
           :
           <View style={{ alignItems: 'center', width:'100%' }}>
             <Icon name="frown-o" size={55} style={[{ marginBottom: 10 }]} />

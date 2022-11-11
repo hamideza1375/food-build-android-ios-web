@@ -28,7 +28,7 @@ import AddAdmin from "./screens/admin/AddAdmin";
 import DeleteAdmin from "./screens/admin/DeleteAdmin";
 import Notifee from './screens/admin/Notifee';
 import ChangeAdmin from "./screens/admin/ChangeAdmin";
-import { Div, Input, Row } from "./Components/Html";
+import { Div, Input, Loading, Row } from "./Components/Html";
 import { Init } from "./Components/Html";
 import { Layout, header } from "./other/Layout";
 import _404 from "./other/404"
@@ -61,7 +61,7 @@ const Food = () => {
   if (allState.width <= 650) imageStyle = { width: allState.width, height: allState.width }
   if (allState.width > 650) imageStyle = { width: 600, height: 600 }
   // const children = (props) => <Layout {...props}  {...p} ><Home {...props} {...p}  {...reducer(props)} /></Layout>; // const _children={children}
-  const _children=(Component)=>({children:(props,_key) => <Layout _key={_key} {...props} {...p} ><Component {...props} {...p} {...reducer(props)} /></Layout>})
+  const _children=(Component)=>({children:(props,_key) => <Layout _key={_key} {...props} {...p} >{p.showActivity && <Loading pos='absolute' top={15} time={900000} />}<Component {...props} {...p} {...reducer(props)} /></Layout>})
   return (
     allState.splash ?
       <Div style={{ width: '100%', height: Platform.OS === 'web' ? '100vh' : '100%', justifyContent: 'center', alignItems: 'center', }} >
@@ -70,6 +70,7 @@ const Food = () => {
       :
       <>
         <Init ref={(e) => allState.set$(e)} id={'s'} />
+        
         <ToastProvider {...p} />
         <Tab.Navigator screenOptions={() => { return { headerTitleStyle: { color: 'transparent' }, headerTitleAlign: 'center' ,...icon}}} >
           <Tab.Group screenOptions={{ headerTitleStyle: { color: 'transparent' }, headerTitleAlign: 'center' }} >

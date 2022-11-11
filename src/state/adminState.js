@@ -12,6 +12,7 @@ export function adminState(p) {
 
 
   this.addAdmin = async () => {
+    p.setshowActivity(true)
     await p.useradmin({ phone: p.phone });
     p.setphone('')
     p.navigation.goBack()
@@ -19,6 +20,7 @@ export function adminState(p) {
 
 
   this.deleteAdmin = async () => {
+    p.setshowActivity(true)
     await p.deleteAdmin({ phone: p.phone });
     p.setphone('')
     p.navigation.goBack()
@@ -26,6 +28,7 @@ export function adminState(p) {
 
 
   this.changeAdmin = async () => {
+    p.setshowActivity(true)
     await p.changeAdmin({ adminPhone: p.phone, newAdminPhone: p.input });
     p.setnavigateProfile(false)
     p.setnavigateUser(false)
@@ -110,7 +113,9 @@ export function adminState(p) {
       "",
       [
         { text: "Cancel", onPress: () => { } },
-        { text: "OK", onPress: async () => { await p.deleteAddress(_id); p.setchange(!p.change); } }
+        { text: "OK", onPress: async () => { 
+          p.setshowActivity(true)
+          await p.deleteAddress(_id); p.setchange(!p.change); } }
       ])
   }
 
@@ -130,6 +135,7 @@ export function adminState(p) {
                 { text: "Cancel", onPress: () => { } },
                 {
                   text: "yes", onPress: async () => {
+                    p.setshowActivity(true)
                     await p.deleteAllAddress(); await p.localStorage.setItem('totalOldPrice', JSON.stringify(p.fromMomemt + '=' + p.totalPrices)); p.setchange(!p.change); p.setshowBtn(true); p.setfromMomemt(null)
                   }
                 }])
@@ -165,6 +171,7 @@ export function adminState(p) {
 
   // createfood
   this.createChild = async () => {
+    p.setshowActivity(true)
     await p.createchildfood(p.route.params.id, { title: p.title, price: p.price, imageUrl: p.imageUrl, info: p.info })
     let current = [...p.current, { title: p.title, price: p.price, imageUrl: p.imageUrl, info: p.info, available: true }]
     p.setcurrent(current)
@@ -181,6 +188,7 @@ export function adminState(p) {
 
   // createpartfood
   this.createTitleFood = async () => {
+    p.setshowActivity(true)
     await p.createfood({ title: p.title, imageUrl: p.imageUrl })
     p.setchangeTitle(!p.changeTitle)
     p.settitle('')
@@ -192,6 +200,7 @@ export function adminState(p) {
 
   // DeleteFood
   this.deleteChildFoodAction = async (id, id2) => {
+    p.setshowActivity(true)
     await p.deletechildfood(id, id2)
     let current = [...p.current]
     let filter = current.filter(c => c._id !== id2)
@@ -200,6 +209,7 @@ export function adminState(p) {
   }
   // DeleteFood
   this.deleteFoodAction = async (id) => {
+    p.setshowActivity(true)
     await p.deletefood(id)
     p.setchangeTitle(!p.changeTitle)
   }
@@ -208,6 +218,7 @@ export function adminState(p) {
 
 
   this.editeFoodAction = async () => {
+    p.setshowActivity(true)
     await p.editchildfood(p.route.params.id, p.route.params.id2, { title: p.title, price: p.price, imageUrl: p.imageUrl, info: p.info })
     let current = p.current.find(c => c._id === p.route.params.id2)
     if (current) {
@@ -230,6 +241,7 @@ export function adminState(p) {
 
 
   this.editeFoods = async () => {
+    p.setshowActivity(true)
     await p.editfood(p.route.params.id, { title: p.title, imageUrl: p.imageUrl })
     p.setchangeTitle(!p.changeTitle)
     p.navigation.goBack()
@@ -239,6 +251,7 @@ export function adminState(p) {
 
 
   this.available = async (available, id, id2) => {
+    p.setshowActivity(true)
     await p.unAvailable({ available }, id, id2)
     let current = [...p.current]
     let find = current.findIndex(c => c._id === p.id2)
@@ -259,6 +272,7 @@ export function adminState(p) {
 
 
   this.sendAvailable = async () => {
+    p.setshowActivity(true)
     await p.unAvailable({ available: true }, p.id, p._id)
     p.setshowModalAvailabe(!p.showModalAvailabe)
   }
@@ -267,6 +281,7 @@ export function adminState(p) {
 
 
   this.notifee = async () => {
+    p.setshowActivity(true)
     await p.createNotification({ title: p.title, message: p.info })
     p.navigation.goBack()
   }
@@ -283,6 +298,7 @@ export function adminState(p) {
 
 
 this.deleteMultiProposal = async () => {
+  p.setshowActivity(true)
   await p.deleteMultiProposal(JSON.stringify(p.proposalId))
   p.setchangeProposal(!p.changeProposal)
 }

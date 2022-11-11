@@ -7,6 +7,7 @@ import { imagePicker } from "../utils/imagePicer";
 export function userState(p) {
 
   this.sendLoginAction = async () => {
+    p.setshowActivity(true)
       const { data } = await p.loginUser({ email: p.email, password: p.password, phone: p.phone, captcha: p.captcha, remember: p.remember }, p.navigation);
       await p.localStorage.setItem("token", data.token);
       await p.localStorage.setItem("exp", data.exp);
@@ -35,12 +36,14 @@ export function userState(p) {
 
 
   this.registerSendAction = async () => {
+    p.setshowActivity(true)
     await p.registerUser({ phone: p.phone });
     p.setchangeRegister(!p.changeRegister)
   }
 
 
   this.registerSendCode = async () => {
+    p.setshowActivity(true)
     await p.verifycodeRegister({ code: p.code, fullname: p.fullname, email: p.email, phone: p.phone, password: p.password })
     p.navigation.navigate("Login")
     p.setchangeRegister(!p.changeRegister)
@@ -81,13 +84,14 @@ export function userState(p) {
 
   this.imagePicker = async () => {
     imagePicker().then(async(uri)=>{
+      p.setshowActivity(true)
       await p.sendProfile({ uri });
       p.setchange(!p.change)
     })
   }
 
 
-
+//!
   this.profile = async () => {
     p.useEffect(() => {
       (async () => {
@@ -104,7 +108,7 @@ export function userState(p) {
       })
 
     }, [])
-
+//!
 
 
     p.useMemo(() => {
@@ -126,6 +130,7 @@ export function userState(p) {
 
   // forgetpassword
   this.forgetAction = async () => {
+    p.setshowActivity(true)
     await p.forgetpassword({ email: p.email })
   }
 
@@ -141,11 +146,13 @@ export function userState(p) {
 
   //sms
   this.smsAction = async () => {
+    p.setshowActivity(true)
     await p.sendcode({ phone: p.myPhone })
     p.setreplaceInput(true)
   }
 
   this.codeAction = async () => {
+    p.setshowActivity(true)
     const { data } = await p.verifycode({ code: p.myCode })
     p.navigation.navigate('ResetPass', { id: data })
   }
@@ -301,6 +308,7 @@ export function userState(p) {
   // resetPass
   this.resetpassword = async () => {
     try {
+      p.setshowActivity(true)
       const { status } = await p.resetpassword(p.route.params.id, { password: p.password, confirmPassword: p.confirmPassword })
       if (status === 200) p.navigation.navigate('Login')
     } catch (err) { alert('خطایی رخ داد دوباره امتحان کنید'); }
@@ -310,6 +318,7 @@ export function userState(p) {
 
 
   this.sendProposal = async () => {
+    p.setshowActivity(true)
     await p.sendProposal({ message: p.message })
     p.setmessage('')
     p.navigation.goBack()
