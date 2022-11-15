@@ -176,7 +176,6 @@ export function userState(p) {
               if(!p.locationPermission){
               p.setregion({ lat: coords.latitude, lng: coords.longitude, })
               p.setlocationPermission(true)
-              console.log(111);
           }  },
             (error) => {
               console.log(error.code, error.message);

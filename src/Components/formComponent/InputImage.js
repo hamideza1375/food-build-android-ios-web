@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Animated, Text, View } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import { Input } from "./FormComponent";
 import Swiper from '../components/Swiper'
 
 function InputImage({ imIconLeft,imIconRight,imageUrl,setImageUrl,_imageUrl,newObj,img,styles}) {
+   
     const pickImage = () => {
       launchImageLibrary({ mediaType: 'photo' }, (res) => {
         if (!res.didCancel) setImageUrl({ name: res.assets[0].fileName, type: res.assets[0].type, uri: res.assets[0].uri })

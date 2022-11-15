@@ -22,7 +22,6 @@ export const create = (title = '', body = '', icon = '') => {
     promise = push.create(title, {
       body,
       icon,
-      timeout: 8000,
     });
   }
   export const onClick = (click) => { click }

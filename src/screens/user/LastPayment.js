@@ -4,7 +4,7 @@ import { Span, P } from '../../Components/Html'
 const GetProposal = (p) => {
   p._user.getLastPayment()
   return (
-    <Span style={{ width: '100%', backgroundColor: '#fff', paddingTop: 50 }} webStyle={{ height: '100vh' }} nativeStyle={{ height: '100%' }} >
+    <Span style={{ width: '100%', backgroundColor: '#fff', paddingTop: 50 }} webStyle={{ height: 'calc(100vh - 130px)' }} nativeStyle={{ height: '100%' }} >
       <>
         <Span style={{ alignSelf: 'center', marginTop: 25, shadowOpacity: .4, elevation: 6, width: '90%', shadowRadius: 5, backgroundColor: '#fff', borderWidth: 1, borderColor: 'silver', borderRadius: 7, padding: 12, alignItems: 'center' }} >
 

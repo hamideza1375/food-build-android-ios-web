@@ -510,6 +510,66 @@ export function foodState(p) {
 
 //home
 export const home = (p) => {
+
+  const navigation = useNavigation()
+  p.useEffect(() => {
+    var toastOK = () => { p.toast.success('موفق آمیز', '✅', 2500) }
+    var toast500 = () => { p.toast.error('خطا', 'مشکلی از سمت سرور پیش آمده'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast400 = () => { p.toast.error('خطا', 'اصلاح کنید و دوباره امتحان کنید'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast399 = () => { p.toast.error('خطا', 'کد وارد شده اشتباه هست'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast398 = () => { p.toast.error('خطا', 'شما قبلا ثبت نام کردید'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast397 = () => { p.toast.error('خطا', 'شما قبلا ثبت نام نکرده این و یا مشخصاتتان را اشتباه وارد کردین'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+    var toast395 = () => { p.toast.error('خطا', 'شما هنوز انتخابی نکردین', 3000); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
+
+    Axios.interceptors.response.use(function (response) {
+      if (response.config.method !== 'get' &&
+        navigation.getCurrentRoute()?.name !== 'Payment' && navigation.getCurrentRoute()?.name !== 'Location' && (response.status === 200 || response.status === 201)) toastOK()
+        p.setshowActivity(false)
+        return response
+    }, function (error) {
+      if (error?.response?.status) {
+        if (error.response.status > 400 && error.response.status <= 500) { toast500() };
+        if (error.response.status === 400) { toast400() };
+        if (error.response.status === 399) { toast399() };
+        if (error.response.status === 398) { toast398() };
+        if (error.response.status === 397) { toast397() };
+        if (error.response.status === 395) { toast395() };
+        p.setshowActivity(false)
+      } return Promise.reject(error);
+    });
+
+  }, [])
+
+
+
+  p.Dimensions.addEventListener('change', ({ window: { width, height } }) => {
+    width < height ? p.setorientation("PORTRAIT") : p.setorientation("LANDSCAPE")
+    p.setwidth(width); p.setheight(height)
+  })
+
+
+  p.useEffect(() => {
+    (async () => {
+      p.localStorage.getItem("token").then((token) => {
+        if (token) {
+          const user = p.jwt_decode(token)
+          p.settokenValue(user)
+        }
+      })
+    })()
+  }, [])
+
+
+  p.useEffect(() => {
+    (async () => {
+      let { data } = await p.getfoods()
+      p.setfoods(data)
+    })()
+  }, [p.changeTitle])
+
+
+
+
   p.useMemo(() => {
     (async () => {
       let newNotification = await p.localStorage.getItem('notification')
@@ -550,6 +610,16 @@ export const home = (p) => {
   }, [p.width])
 
 
+
+
+  p.useMemo(() => {
+    setTimeout(() => {
+      p.setSplash(false)
+    }, 1000)
+  }, [])
+
+
+
   p.useEffect(() => {
     (async () => {
       setTimeout(() => {
@@ -560,67 +630,6 @@ export const home = (p) => {
     })()
   }, [])
 
-
-  const navigation = useNavigation()
-  p.useEffect(() => {
-    var toastOK = () => { p.toast.success('موفق آمیز', '✅', 2500) }
-    var toast500 = () => { p.toast.error('خطا', 'مشکلی از سمت سرور پیش آمده'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
-    var toast400 = () => { p.toast.error('خطا', 'اصلاح کنید و دوباره امتحان کنید'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
-    var toast399 = () => { p.toast.error('خطا', 'کد وارد شده اشتباه هست'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
-    var toast398 = () => { p.toast.error('خطا', 'شما قبلا ثبت نام کردید'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
-    var toast397 = () => { p.toast.error('خطا', 'شما قبلا ثبت نام نکرده این و یا مشخصاتتان را اشتباه وارد کردین'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
-    var toast395 = () => { p.toast.error('خطا', 'شما هنوز انتخابی نکردین', 3000); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
-
-    Axios.interceptors.response.use(function (response) {
-      if (response.config.method !== 'get' &&
-        navigation.getCurrentRoute()?.name !== 'Payment' && navigation.getCurrentRoute()?.name !== 'Location' && (response.status === 200 || response.status === 201)) toastOK()
-        p.setshowActivity(false)
-        return response
-    }, function (error) {
-      if (error?.response?.status) {
-        if (error.response.status > 400 && error.response.status <= 500) { toast500() };
-        if (error.response.status === 400) { toast400() };
-        if (error.response.status === 399) { toast399() };
-        if (error.response.status === 398) { toast398() };
-        if (error.response.status === 397) { toast397() };
-        if (error.response.status === 395) { toast395() };
-        p.setshowActivity(false)
-      } return Promise.reject(error);
-    });
-
-  }, [])
-
-
-
-  p.useMemo(() => {
-    setTimeout(() => {
-      p.setSplash(false)
-    }, 1000)
-  }, [])
-  p.Dimensions.addEventListener('change', ({ window: { width, height } }) => {
-    width < height ? p.setorientation("PORTRAIT") : p.setorientation("LANDSCAPE")
-    p.setwidth(width); p.setheight(height)
-  })
-
-
-  p.useEffect(() => {
-    (async () => {
-      p.localStorage.getItem("token").then((token) => {
-        if (token) {
-          const user = p.jwt_decode(token)
-          p.settokenValue(user)
-        }
-      })
-    })()
-  }, [])
-
-
-  p.useEffect(() => {
-    (async () => {
-      let { data } = await p.getfoods()
-      p.setfoods(data)
-    })()
-  }, [p.changeTitle])
 
 }
 //home

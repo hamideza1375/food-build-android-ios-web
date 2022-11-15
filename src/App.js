@@ -61,7 +61,7 @@ const Food = () => {
   if (allState.width <= 650) imageStyle = { width: allState.width, height: allState.width }
   if (allState.width > 650) imageStyle = { width: 600, height: 600 }
   // const children = (props) => <Layout {...props}  {...p} ><Home {...props} {...p}  {...reducer(props)} /></Layout>; // const _children={children}
-  const _children=(Component)=>({children:(props,_key) => <Layout _key={_key} {...props} {...p} >{p.showActivity && <Loading pos='absolute' top={15} time={900000} />}<Component {...props} {...p} {...reducer(props)} /></Layout>})
+  const _children=(Component,key)=>({children:(props) => <Layout _key={key} {...props} {...p} >{p.showActivity && <Loading pos='absolute' top={15} time={900000} />}<Component {...props} {...p} {...reducer(props)} /></Layout>})
   return (
     allState.splash ?
       <Div style={{ width: '100%', height: Platform.OS === 'web' ? '100vh' : '100%', justifyContent: 'center', alignItems: 'center', }} >
@@ -84,9 +84,9 @@ const Food = () => {
             <Tab.Screen name="ForgetPass" options={{ title: 'فراموشی رمز عبور', headerShown: true, headerTitleStyle: { color: 'transparent' }, headerTitleAlign: 'center' }} {..._children(ForgetPass)} />
             <Tab.Screen name="ResetPass" options={{ title: 'عوض کردن رمز عبور', headerShown: true, headerTitleStyle: { color: 'transparent' }, headerTitleAlign: 'center' }} {..._children(ResetPass)} />
             <Tab.Screen name="Logout" options={{ title: 'خروج' }} {..._children(Logout)} />
-            <Tab.Screen name="Profile" options={{ title: 'پروفایل' }} {..._children(Profile)} />
+            <Tab.Screen name="Profile" options={{ title: 'پروفایل' }} {..._children(Profile,'100')} />
             <Tab.Screen name="SendProposal" options={{headerShown: true, headerTitleStyle: { color: '#222', fontFamily:'IRANSansWeb', fontSize:15 }, title: 'ارسال نظرات و پیشنهادات' }} {..._children(SendProposal)} />
-            <Tab.Screen name="LastPayment" options={{ title: 'آخرین خرید' }} {..._children(LastPayment)} />
+            <Tab.Screen name="LastPayment" options={{ title: 'آخرین خرید' }} {..._children(LastPayment,'100')} />
           </Tab.Group>
           <Tab.Group screenOptions={{ headerShown: false }} >
             <Tab.Screen name="FinallFoodPayment" options={{ title: 'سبد خرید', headerShown: Platform.OS !== 'web' ? true : false, headerStyle: { backgroundColor: '#fa0' } }} {..._children(FinallFoodPayment)} />
