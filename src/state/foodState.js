@@ -513,7 +513,7 @@ export const home = (p) => {
 
   const navigation = useNavigation()
   p.useEffect(() => {
-    var toastOK = () => { p.toast.success('موفق آمیز', '✅', 2500) }
+    var toastOK = () => { p.toast.success('موفق آمیز', '✅', 4000) }
     var toast500 = () => { p.toast.error('خطا', 'مشکلی از سمت سرور پیش آمده'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
     var toast400 = () => { p.toast.error('خطا', 'اصلاح کنید و دوباره امتحان کنید'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
     var toast399 = () => { p.toast.error('خطا', 'کد وارد شده اشتباه هست'); p.setRand(parseInt(Math.random() * 9000 + 1000)); p.refInput.current && p.refInput.current.setNativeProps({ text: '' }); p.setcaptcha('') }
@@ -576,7 +576,7 @@ export const home = (p) => {
       const { data } = await p.notification()
       if (data)
         if (data.message && newNotification !== data.message) {
-          p.create(data.title, data.message, require('../assets/images/logo.png'))
+          p.create(data.title, data.message, require('../assets/images/logo.jpg'))
           await p.localStorage.setItem('notification', data.message)
         }
     })();
@@ -588,7 +588,7 @@ export const home = (p) => {
           const { data } = await p.notification()
           if (data)
             if (data.message && newNotification !== data.message) {
-              p.create(data.title, data.message, require('../assets/images/logo.png'))
+              p.create(data.title, data.message, require('../assets/images/logo.jpg'))
               await p.localStorage.setItem('notification', data.message)
             }
         })();
@@ -601,7 +601,7 @@ export const home = (p) => {
           const { data } = await p.notification()
           if (data)
             if (data.message && newNotification !== data.message) {
-              p.create(data.title, data.message, require('../assets/images/logo.png'))
+              p.create(data.title, data.message, require('../assets/images/logo.jpg'))
               await p.localStorage.setItem('notification', data.message)
             }
         })();

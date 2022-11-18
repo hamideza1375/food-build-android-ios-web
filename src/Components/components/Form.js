@@ -318,7 +318,7 @@ const Form = ({webStyle={}, nativeStyle={}, timer=false, refInput, rand, setRand
             <KeyboardAvoidingView behavior={"height"} style={{ height: 70, minHeight: 70, marginVertical: 30 }}>
               <View style={[styles.viewInput, { minHeight: 90 }, { marginBottom: 5 }]} >
                 <Input
-                  mc_icon="cellphone-message"
+                  m_icon="textsms"
                   iconSize={30}
                   keyboardType="phone-pad"
                   value={code}

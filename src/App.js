@@ -65,7 +65,7 @@ const Food = () => {
   return (
     allState.splash ?
       <Div style={{ width: '100%', height: Platform.OS === 'web' ? '100vh' : '100%', justifyContent: 'center', alignItems: 'center', }} >
-        <Image source={require('./assets/images/logo.png')} style={[{ alignSelf: 'center', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', borderRadius: 5, marginTop: Platform.OS === 'ios' ? 50 : 0 }, imageStyle]} />
+        <Image source={require('./assets/images/logo.jpg')} style={[{ alignSelf: 'center', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', borderRadius: 5, marginTop: Platform.OS === 'ios' ? 50 : 0 }, imageStyle]} />
       </Div>
       :
       <>

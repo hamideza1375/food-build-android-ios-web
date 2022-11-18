@@ -4,7 +4,6 @@ import App from './App';
 const iconFontStyles =`
         @font-face { src: url(${require('./assets/fonts/FontAwesome.ttf')}); font-family: FontAwesome;  }
         @font-face { src: url(${require('./assets/fonts/AntDesign.ttf')}); font-family: AntDesign;  }
-        @font-face { src: url(${require('./assets/fonts/MaterialCommunityIcons.ttf')}); font-family: MaterialCommunityIcons;  }
         @font-face { src: url(${require('./assets/fonts/MaterialIcons.ttf')}); font-family: MaterialIcons;  }
         
         @font-face { font-family: 'IRANSansWeb-FaNum'; src: url(${require('./assets/fonts/IRANSansWeb(FaNum).woff2')}) format('woff2')}

@@ -2,12 +2,11 @@ import React, { useRef } from 'react'
 import { StyleSheet, Animated, Pressable } from 'react-native'
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import Icon2 from 'react-native-vector-icons/dist/AntDesign';
-import Icon3 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import Icon4 from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon3 from 'react-native-vector-icons/dist/MaterialIcons';
 
 
 const B_icon = (prop) => {
-  const { color, bgcolor = "#02f", size = 1, chatRef, icon, a_icon,m_icon,mc_icon, border = "#01c", style, iconSize, iconPress, onClick } = prop
+  const { color, bgcolor = "#02f", size = 1, chatRef, icon, a_icon,m_icon, border = "#01c", style, iconSize, iconPress, onClick } = prop
 
   const bgClr = bgcolor ?
     (bgcolor == 'red') && '#e22a' ||
@@ -77,8 +76,7 @@ const B_icon = (prop) => {
           
           icon && <Icon name={icon} color={color ? color : 'white'} size={iconSize ? iconSize : 28} iconPress={iconPress} /> ||
           a_icon && <Icon2 name={a_icon} color={color ? color : 'white'} size={iconSize ? iconSize : 28} iconPress={iconPress} /> ||
-          m_icon &&  <Icon3 name={m_icon} color={color ? color : 'white'} size={iconSize ? iconSize : 28} iconPress={iconPress} /> ||
-          mc_icon &&  <Icon4 name={mc_icon} color={color ? color : 'white'} size={iconSize ? iconSize : 28} iconPress={iconPress} />
+          m_icon &&  <Icon3 name={m_icon} color={color ? color : 'white'} size={iconSize ? iconSize : 28} iconPress={iconPress} /> 
         }
       </Pressable>
     </Animated.View>

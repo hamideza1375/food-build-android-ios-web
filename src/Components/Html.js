@@ -3,7 +3,6 @@ import { Animated as _Animated, StyleSheet as _StyleSheet, View, Text, Image, Sc
 import _icon from 'react-native-vector-icons/dist/FontAwesome';
 import Aicon from 'react-native-vector-icons/dist/AntDesign';
 import Micon from 'react-native-vector-icons/dist/MaterialIcons';
-import Mcicon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import s from './styles/html.module.scss'
 export { default as B_icon } from './components/B_icon'
 export { default as Badge } from './components/Badge'
@@ -196,8 +195,6 @@ export const Icon = (props) => <_icon style={[props.onClick && Platform.OS === '
 export const A_icon = (props) => <Aicon style={[props.onClick && Platform.OS === 'web' && { cursor: 'pointer' }, props.style]} onPress={props.onClick} {...props} />
 
 export const M_icon = (props) => <Micon style={[props.onClick && Platform.OS === 'web' && { cursor: 'pointer' }, props.style]} onPress={props.onClick} {...props} />
-
-export const Mc_icon = (props) => <Mcicon style={[props.onClick && Platform.OS === 'web' && { cursor: 'pointer' }, props.style]} onPress={props.onClick} {...props} />
 
 export const Animated = _Animated
 

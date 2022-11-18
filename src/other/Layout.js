@@ -4,7 +4,7 @@ import { Platform, SafeAreaView, Pressable, View } from 'react-native';
 import TopTab from '../Components/tabNavigation/TopTab';
 import BottomTab from '../Components/tabNavigation/BottomTab';
 import Drawer from '../Components/tabNavigation/Drawer';
-import { Mc_icon } from '../Components/Html';
+import { Icon } from '../Components/Html';
 
 export const Layout = (p) => {
 
@@ -106,7 +106,7 @@ export const header = () => {
   const navigation = useNavigation();
   return (
     <Pressable onPress={() => navigation.goBack()} >
-      <Mc_icon
+      <Icon
       name='arrow-right'
         style={{ fontSize: 29, marginTop: -5, paddingVertical: 2.5, flexGrow: 1, color:'#222',fontWeight:'1000' }}/>
 
