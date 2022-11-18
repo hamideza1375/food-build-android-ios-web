@@ -6,7 +6,7 @@ import { localhost } from '../../utils/axios/axios'
 
 const Location = (p) => {
 
-p._user.getUserLocation()
+// p._user.getUserLocation()
 
 
   return (
