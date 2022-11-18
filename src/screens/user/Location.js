@@ -1,23 +1,46 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react'
-import { View } from 'react-native';
+import { PermissionsAndroid, View } from 'react-native';
 import Frame from '../../Components/other/Frame';
 import { localhost } from '../../utils/axios/axios'
+import Geolocation from 'react-native-geolocation-service';
 
 
 const Location = (p) => {
 
-p._user.getUserLocation()
+  p.useEffect(() => {
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: '',
+          message: '',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK'
+        }
+      ).then(() => {
+        Geolocation.getCurrentPosition(
+          ({ coords }) => {
+            p.setregion({ lat: coords.latitude, lng: coords.longitude, })
+            p.setlocationPermission(true)
+          },
+          (error) => {
+            console.log(error.code, error.message);
+          },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+       })
+    }
+  }, [])
 
- const [token, settoken] = useState({})
 
-
- p.useEffect(()=>{
-  AsyncStorage.getItem('token').then((token)=>{
-    settoken(token)
-  })
- },[])
-
+  const [token, settoken] = useState({})
+  p.useEffect(() => {
+    AsyncStorage.getItem('token').then((token) => {
+      settoken(token)
+    })
+  }, [])
 
 
   return (
@@ -44,7 +67,7 @@ p._user.getUserLocation()
     <input onchange="serchInput(event.target.value)" type="text" placeholder="search"
       style="text-align: right;border-radius: 1px;border: 1px solid rgb(150, 146, 146);display:block;flex-grow: 1;height: 30.5px;position:relative;z-index:1000" />
     <i onclick="sendIcon()"
-      style="border-radius: 1px;padding: 5px 5px 0px;border: 1px solid rgb(150, 146, 146); background-color: #fff;font-size: 19px;display:block;height: 30px;width: 37px;position:relative;z-index:1000;box-sizing:border-box">🔎</i>
+      style="border-radius: 1px;padding: 2px 5px 0px;border: 1px solid rgb(150, 146, 146); background-color: #fff;font-size: 19px;display:block;height: 30px;width: 37px;position:relative;z-index:1000;box-sizing:border-box">🔎</i>
       
       </form>
 

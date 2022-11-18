@@ -1,10 +1,29 @@
 import React from 'react'
+import { PermissionsAndroid, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { Loading, Button, Container, ImgBackground, P, Scroll, Span, Table } from '../../Components/Html';
 import { getLocation } from '../user/getLocation/getLocation';
 import s from "./Food.module.scss"
 
 const FinallFoodPayment = (p) => {
+
+
+  p.useEffect(() => {
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: '',
+          message: '',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK'
+        }
+      ).then(() => { })
+    }
+  }, [])
+
+
   const inputPrice = `${p.allprice ? p.allprice : '0'}`
   const allfood = p.allfood.filter((a) => a.num > 0)
   p._food.allPrice()

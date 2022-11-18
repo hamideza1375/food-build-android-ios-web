@@ -163,27 +163,6 @@ export function userState(p) {
 
 
   // location
-  this.getUserLocation = async () => {
-  p.useEffect(() => {
-    (async () => {
-      const _token = await p.localStorage.getItem("token");
-      if (_token) p.setlocationtoken(_token)
-    })()
-
-    if(!p.locationPermission)
-        Geolocation.getCurrentPosition(
-            ({coords}) => {
-              if(!p.locationPermission){
-              p.setregion({ lat: coords.latitude, lng: coords.longitude, })
-              p.setlocationPermission(true)
-          }  },
-            (error) => {
-              console.log(error.code, error.message);
-            },
-            { enableHighAccuracy: p.route.params.origin?false:true, timeout: 15000, maximumAge: 10000 }
-        );
-  }, [])
-  }
 
 
   this.geoCodeAction = async () => {
