@@ -1,4 +1,5 @@
-import React from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react'
 import { View } from 'react-native';
 import Frame from '../../Components/other/Frame';
 import { localhost } from '../../utils/axios/axios'
@@ -6,7 +7,17 @@ import { localhost } from '../../utils/axios/axios'
 
 const Location = (p) => {
 
-// p._user.getUserLocation()
+p._user.getUserLocation()
+
+ const [token, settoken] = useState({})
+
+
+ p.useEffect(()=>{
+  AsyncStorage.getItem('token').then((token)=>{
+    settoken(token)
+  })
+ },[])
+
 
 
   return (
@@ -20,9 +31,7 @@ const Location = (p) => {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${localhost}/css/bootstrap.css" />
     <link rel="stylesheet" href="${localhost}/css/leaflet.css" />
-    <link rel="stylesheet" href="${localhost}/css/fontawesome.css" integrity="sha512-PIAUVU8u1vAd0Sz1sS1bFE5F1YjGqm/scQJ+VIUJL9kNa8jtAWFUDMu5vynXPDprRRBqHrE8KKEsjA7z22J1FA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <div style="display: flex; justify-content: flex-end; height: 100%; ">
@@ -34,13 +43,13 @@ const Location = (p) => {
     style="width:250px;margin: 3px 2px 0 0; display:flex;flex-direction: row-reverse; position: absolute; align-items: flex-end; ">
     <input onchange="serchInput(event.target.value)" type="text" placeholder="search"
       style="text-align: right;border-radius: 1px;border: 1px solid rgb(150, 146, 146);display:block;flex-grow: 1;height: 30.5px;position:relative;z-index:1000" />
-    <i onclick="sendIcon()" class="fa fa-search"
-      style="border-radius: 1px;padding: 5px 5px 0px;border: 1px solid rgb(150, 146, 146); background-color: #fff;font-size: 19px;display:block;height: 30px;width: 30px;position:relative;z-index:1000"></i>
+    <i onclick="sendIcon()"
+      style="border-radius: 1px;padding: 5px 5px 0px;border: 1px solid rgb(150, 146, 146); background-color: #fff;font-size: 19px;display:block;height: 30px;width: 37px;position:relative;z-index:1000;box-sizing:border-box">🔎</i>
       
       </form>
 
-      <span id='btnGetLocation' onclick="setLocation()" style='border:2px solid #bfbfbf;display: flex; alignItems: center; justifyContent: center; textAlign: center; background: #fff;padding: 0; borderRadius: 4px; zIndex: 10000; top: 75; left: 9.88; fontSize: 20px; height: 31px; maxHeight: 31px; width: 33px; maxWidth: 34px; borderWidth: 0; boxShadow: .2px 1.5px 4px #333d;z-index:10000;position:absolute;border-radius:4px;align-Items:center;justify-content:center'><p style="transform: rotate(-65deg); padding: 0; margin: 0; font-size:24px; text-align:center; margin:auto; margin-top:-5px " >⌲</p></span>
-      <span id='btnGetLocation2' onclick="setLocation2()" style='border:2px solid #bfbfbf;display: flex; alignItems: center; justifyContent: center; textAlign: center; background: #fff;padding: 0; borderRadius: 4px; zIndex: 10000; top: 75; left: 9.88; fontSize: 20px; height: 31px; maxHeight: 31px; width: 33px; maxWidth: 34px; borderWidth: 0; boxShadow: .2px 1.5px 4px #333d;z-index:10000;position:absolute;border-radius:4px;align-Items:center;justify-content:center'><p style="transform: rotate(-65deg); padding: 0; margin: 0; font-size:24px; text-align:center; margin:auto; margin-top:-5px " >⌲</p></span>
+      <span id='btnGetLocation' onclick="setLocation()" style='border:2px solid #bfbfbf;display: flex; alignItems: center; justifyContent: center; textAlign: center; background: #fff;padding: 0; borderRadius: 4px; zIndex: 10000; top: 85; left: 17.5; fontSize: 20px; height: 31px; maxHeight: 31px; width: 30px; maxWidth: 34px; borderWidth: 0; boxShadow: .2px 1.5px 4px #333d;z-index:10000;position:absolute;border-radius:4px;align-Items:center;justify-content:center'><p style="transform: rotate(-65deg); padding: 0; margin: 0; font-size:24px; text-align:center; margin:auto; margin-top:-5px " >⌲</p></span>
+      <span id='btnGetLocation2' onclick="setLocation2()" style='border:2px solid #bfbfbf;display: flex; alignItems: center; justifyContent: center; textAlign: center; background: #fff;padding: 0; borderRadius: 4px; zIndex: 10000; top: 85; left: 17.5; fontSize: 20px; height: 31px; maxHeight: 31px; width: 30px; maxWidth: 34px; borderWidth: 0; boxShadow: .2px 1.5px 4px #333d;z-index:10000;position:absolute;border-radius:4px;align-Items:center;justify-content:center'><p style="transform: rotate(-65deg); padding: 0; margin: 0; font-size:24px; text-align:center; margin:auto; margin-top:-5px " >⌲</p></span>
 
 
       <div id="map" style="width:100%; height: 100%;display:flex;"></div>
@@ -48,7 +57,7 @@ const Location = (p) => {
 
 
 
-<div id='bottomDiv' style='z-index:10000;position:absolute;bottom:0;display:flex;justify-content:space-between;width:100%;background:#fff;padding:15px;flex-direction:column'>
+<div id='bottomDiv' style='z-index:10000;position:absolute;bottom:0;display:flex;justify-content:space-between;width:94%;background:#fff;padding:15px 5px;flex-direction:column'>
 <div style='display:flex;flex-direction:row-reverse;justify-content:space-between;width:100%'>
 <span style='display:flex;' > <input type='number' style='text-align:center;width:45px;height:40px' id='plaque' /><p style='margin:7px 5px' > :پلاک </p> </span>
 <span style='display:flex;' > <input type='number' style='text-align:center;width:45px;height:40px' id='floor'/><p style='margin:7px 5px' >:طبقه </p></span>
@@ -70,7 +79,7 @@ const Location = (p) => {
       <script>
       
       axios.defaults.headers.post["Content-Type"] = "application/json";
-      axios.defaults.headers.common["Authorization"] = ${JSON.stringify(p.locationtoken)}
+      axios.defaults.headers.common["Authorization"] = ${JSON.stringify(token)}
 
       const origin = ${JSON.stringify(p.route.params?.origin)}
 

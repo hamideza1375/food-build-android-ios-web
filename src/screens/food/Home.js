@@ -6,6 +6,7 @@ import { Platform } from 'react-native';
 
 const Home = (p) => {
   // const p = context()
+  p._food.getTitileFoods()
   p._food.setPagination()
   p._food.backHandler()
   p._user._token()
@@ -36,6 +37,9 @@ const Home = (p) => {
         }
       </Scroll>
         :
+      (!p.foods.length ?
+        <Loading h={400} />
+        :  
         <FlatList
           columnWrapperStyle={{ alignSelf: 'center' }}
           numColumns={3}
@@ -55,7 +59,7 @@ const Home = (p) => {
                 <Button outline bgcolor='red' class={s.logoutBtn} onPress={() => p.navigation.navigate("Logout")}>logout</Button>
               </>
           )}
-        />
+        />)
       }
     </Span>
   )

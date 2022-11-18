@@ -33,6 +33,17 @@ export function foodState(p) {
 
 
 
+  this.getTitileFoods=()=>{
+    p.useEffect(() => {
+      (async () => {
+        let { data } = await p.getfoods()
+        p.setfoods(data)
+      })()
+    }, [])
+  }
+
+
+
   // EditFood
   this.getSingleTitleFoods = async () => {
     p.useEffect(() => {
